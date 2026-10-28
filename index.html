@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI Travel Assistant · V3.5 친구 10인 셀프 테스트</title>
+<style>
+:root{--bg:#FAFBFC;--card:#fff;--stone:#F1F3F5;--line:#E6EAF0;--blue:#2354C7;--soft:#EAF0FF;--ink:#202020;--mute:#666F7E;--warn:#805D19;--warnbg:#FFF6E7;--danger:#A13A3B;--green:#236C57;--shadow:0 18px 70px rgba(22,40,85,.13)}
+*{box-sizing:border-box}body{margin:0;background:#eff2f8;color:var(--ink);font-family:system-ui,-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;font-size:14px}button,input,select{font:inherit}button{cursor:pointer;border:0;background:none;color:inherit}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #82a5fc;outline-offset:2px}.workspace{min-height:100vh;display:flex;justify-content:center;gap:42px;padding:32px 20px 50px;align-items:flex-start}.info{width:326px;padding-top:22px}.eyebrow{font-size:11px;font-weight:800;letter-spacing:.11em;color:var(--blue);text-transform:uppercase}.info h1{font-size:29px;letter-spacing:-1.2px;line-height:1.25;margin:12px 0}.info p{font-size:14px;line-height:1.8;color:#586274;margin:0 0 24px}.control{border-top:1px solid #dfe3eb;padding:16px 0 14px}.control label{display:block;font-size:12px;color:#647084;font-weight:800;margin-bottom:9px}.segments{display:flex;flex-wrap:wrap;gap:6px}.segments button{border:1px solid #d6dce6;border-radius:11px;padding:9px 12px;background:white;font-size:13px;min-height:42px}.segments button[aria-pressed=true]{color:var(--blue);border-color:var(--blue);background:#eff4ff;font-weight:800}.toggles{display:flex;flex-direction:column;gap:9px}.toggle{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:42px}.toggle input{width:18px;height:18px;accent-color:var(--blue)}.note{background:#fff;border-radius:14px;border:1px solid #dbe0e8;padding:14px 16px;font-size:12px;color:#667184;line-height:1.7;margin-top:18px}.shell{width:390px;height:820px;flex:none;background:var(--bg);border:8px solid #1d2735;border-radius:42px;box-shadow:var(--shadow);position:relative;overflow:hidden}.statusbar{height:34px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:11px;font-weight:700;color:#253040;background:var(--bg);position:relative;z-index:5}.scroll{position:absolute;inset:34px 0 0;overflow:auto;scrollbar-width:none;padding:0 20px 164px}.scroll::-webkit-scrollbar{display:none}.bottomnav{position:absolute;bottom:0;left:0;right:0;height:73px;background:rgba(255,255,255,.97);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);z-index:8;padding:4px 16px 8px;backdrop-filter:blur(10px)}.nav-item{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;font-size:11px;font-weight:700;color:#8a92a0;min-height:54px}.nav-item strong{font-size:21px;font-weight:500;line-height:1}.nav-item.active{color:var(--blue)}.fab{width:58px;height:58px;border-radius:50%;color:white;background:var(--blue);box-shadow:0 8px 20px rgba(35,84,199,.3);font-size:32px;display:flex;align-items:center;justify-content:center;position:absolute;right:20px;bottom:91px;z-index:9}.fab[aria-expanded=true]{transform:rotate(45deg)}.fab-sheet{position:absolute;right:20px;bottom:159px;width:238px;background:white;border:1px solid var(--line);border-radius:16px;box-shadow:0 13px 30px #22334e24;z-index:10;padding:6px}.fab-sheet button{display:flex;align-items:center;gap:12px;padding:8px 12px;width:100%;min-height:48px;text-align:left;font-size:14px;font-weight:650;border-radius:9px}.fab-sheet button+button{border-top:1px solid var(--line)}.fab-sheet button:hover{background:var(--soft)}.fab-sheet span{color:var(--blue);width:22px;text-align:center;font-size:19px}.top{display:flex;justify-content:space-between;align-items:flex-start;padding:14px 0 22px;gap:8px}.kicker{font-size:11px;color:var(--mute);margin-bottom:5px}.tripname{font-size:25px;font-weight:800;letter-spacing:-1px;line-height:1.3}.meta{color:var(--mute);font-size:12px;margin-top:5px}.stage{font-size:11px;background:var(--soft);color:var(--blue);border-radius:12px;padding:7px 11px;font-weight:750;white-space:nowrap}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px}.surface{background:var(--stone);border-radius:15px;padding:16px;margin-bottom:14px}.sectitle{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:21px 0 10px}.sectitle h2{font-size:17px;letter-spacing:-.35px;margin:0}.small{font-size:12px;color:var(--mute);line-height:1.55}.caption{font-size:13px;color:var(--mute);line-height:1.6}.money{font-size:33px;font-weight:830;letter-spacing:-1.4px;line-height:1.3;margin:5px 0 8px;font-variant-numeric:tabular-nums}.hero-label{font-size:13px;font-weight:680;color:#596575}.muted{color:var(--mute)}.row{display:flex;gap:11px;align-items:center;justify-content:space-between}.grow{flex:1;min-width:0}.compact-action{width:100%;min-height:60px;padding:12px 13px;border-radius:15px;background:var(--soft);display:flex;align-items:center;gap:12px;text-align:left;margin-bottom:13px}.symbol{display:inline-flex;flex:none;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;background:#fff;color:var(--blue);font-size:18px}.arrow{font-size:22px;color:var(--blue);padding-left:6px}.c-title{font-size:14px;font-weight:760;line-height:1.4}.minor{font-size:12px;color:var(--mute);margin-top:3px;line-height:1.4}.outlined{width:100%;min-height:44px;border:1px solid var(--line);border-radius:12px;background:var(--card);font-weight:750;text-align:center;padding:8px 12px}.primary:disabled{opacity:.48;cursor:not-allowed}.primary{background:var(--blue);color:#fff;width:100%;min-height:48px;border-radius:12px;font-size:14px;font-weight:800;padding:10px 12px}.ghost{height:44px;padding:9px 12px;color:var(--blue);font-weight:730;border-radius:9px}.text-action{min-height:44px;padding:8px 12px;color:var(--blue);font-weight:700;border-radius:9px;display:inline-flex;align-items:center;gap:4px}.progress{height:6px;border-radius:9px;background:var(--line);overflow:hidden;margin:9px 0 8px}.progress>i{display:block;height:100%;width:76%;background:var(--blue);border-radius:9px}.budgetwrap{border-top:1px solid var(--line);margin-top:15px;padding-top:13px}.split{display:grid;grid-template-columns:1fr 1fr;gap:8px}.grayrow{background:var(--stone);border-radius:12px;padding:10px 12px}.grayrow .label{font-size:12px;color:var(--mute);margin-bottom:5px}.grayrow strong{font-size:14px}.listrow{display:flex;align-items:center;gap:11px;padding:12px 0;min-height:78px;width:100%;text-align:left;border-bottom:1px solid var(--line)}.listrow:last-child{border-bottom:0}.listrow .iconbox{flex:none;width:38px;height:38px;display:grid;place-items:center;background:var(--stone);border-radius:11px;font-size:17px}.listrow .price{text-align:right;white-space:nowrap;font-size:14px;font-weight:800}.listrow .date{font-size:12px;color:var(--mute);margin-top:4px}.group-heading{font-size:12px;color:var(--mute);font-weight:740;margin:16px 0 4px}.filters{display:flex;gap:7px;margin:2px 0 15px}.filter{padding:0 18px;min-height:44px;border-radius:12px;background:var(--stone);font-size:13px;font-weight:750}.filter.active{background:var(--blue);color:#fff}.pagehead{display:flex;align-items:center;gap:9px;min-height:57px;margin-top:4px}.pagehead .back{width:44px;height:44px;font-size:23px;color:var(--ink);border-radius:12px}.pagehead h1{font-size:21px;margin:0;letter-spacing:-.5px}.pagehead .more{margin-left:auto;width:44px;height:44px;font-size:24px;border-radius:12px}.largeamount{font-size:32px;font-weight:850;letter-spacing:-1px;margin:7px 0 3px}.statusline{font-size:13px;color:var(--mute);line-height:1.6}.kv{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:45px;border-bottom:1px solid var(--line);font-size:13px}.kv:last-child{border:0}.kv span{color:var(--mute)}.kv strong{font-weight:740;text-align:right}.sectionheading{font-size:16px;font-weight:800;margin:22px 0 10px}.actionrow{min-height:48px;display:flex;align-items:center;justify-content:space-between;width:100%;gap:10px;text-align:left;font-size:14px;font-weight:650}.tone{padding:10px 13px;background:var(--stone);border-radius:12px;margin:12px 0 14px}.tone p{margin:0;font-size:12px;color:var(--mute);line-height:1.55}.fixbottom{position:absolute;left:0;right:0;bottom:0;padding:12px 20px calc(16px + env(safe-area-inset-bottom));background:#fffffff5;border-top:1px solid var(--line);z-index:8}.fixbottom .primary+.outlined,.fixbottom .outlined+.ghost{margin-top:8px}.fixbottom .ghost{width:100%;display:block}.flex-actions{display:grid;gap:7px}.evidence{border:1px solid #d3dbe8;background:linear-gradient(130deg,#f9f8f4,#f1f1ee);border-radius:16px;padding:14px;margin:0 0 12px}.evidence h3{margin:0 0 10px;font-size:11px;color:#697182;font-weight:700}.paper{background:#fff;border-radius:8px;border:1px solid #dedede;padding:10px 13px;transform:rotate(-1deg);box-shadow:0 5px 12px #0000000c}.paper p{margin:3px 0;font-size:12px;color:#4d5560}.hilite{display:flex;justify-content:space-between;align-items:center;background:#eef3ff;border:2px solid var(--blue);border-radius:5px;padding:5px 7px;margin-top:8px;font-size:13px;font-weight:750}.secondarytotal{display:flex;justify-content:space-between;color:#798391;font-size:12px;border-bottom:1px dashed #cbd1db;padding:4px 0}.evidence-foot{font-size:11px;color:#818999;margin-top:12px}.choice{display:flex;align-items:center;gap:12px;min-height:60px;padding:12px;border:1px solid var(--line);border-radius:13px;margin-bottom:8px;background:var(--card);font-size:16px;font-weight:730;cursor:pointer}.choice input{width:18px;height:18px;accent-color:var(--blue)}.choice.selected{border:2px solid var(--blue);background:#fcfdff}.compare{width:100%;border-collapse:collapse;background:#fff;border-radius:13px;overflow:hidden;font-size:12px}.compare th,.compare td{border-bottom:1px solid var(--line);padding:12px 7px;text-align:left;vertical-align:top;word-break:keep-all}.compare tr:last-child td{border-bottom:0}.compare th{background:var(--stone);color:#677183;font-size:12px}.compare th:first-child,.compare td:first-child{width:56px;color:var(--mute)}.compare td:nth-child(2),.compare td:nth-child(3){width:40%}.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 8px;background:var(--stone);border-radius:9px;font-size:11px;font-weight:760;color:#3d4b61}.badge.blue{background:var(--soft);color:var(--blue)}.badge.amber{background:var(--warnbg);color:var(--warn)}.formlabel{font-weight:720;font-size:13px;margin:20px 0 8px}.field{width:100%;min-height:54px;border:1px solid var(--line);border-radius:12px;background:white;padding:12px 14px;color:var(--ink);font-size:16px}.amountentry{display:flex;gap:10px;align-items:center}.amountentry input{flex:1;min-width:0;font-size:32px;font-weight:820}.amountentry select{width:91px;min-height:54px;border:1px solid var(--line);border-radius:12px;background:var(--stone);padding:8px;font-weight:780}.thintext{font-size:12px;color:var(--mute);margin:7px 0 0}.msg{border-radius:12px;background:#eaf6f0;color:#236c57;font-size:12px;padding:10px 12px;margin-top:9px}.warnmsg{background:var(--warnbg);color:#775819}.step{display:flex;gap:12px;align-items:center;min-height:65px;border-bottom:1px solid var(--line)}.step:last-child{border:0}.step .text{flex:1}.step .actionbutton{height:44px;min-width:64px;font-size:12px;font-weight:750;color:var(--blue)}.subfooter{border-top:1px solid var(--line);margin-top:14px;padding-top:12px}.miniButton{min-height:44px;color:var(--blue);font-weight:750;padding:9px 10px;border-radius:9px}.hide{display:none!important}.stats-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:12px}.stats-three .grayrow{padding:10px 7px;text-align:center;min-width:0}.stats-three .label{font-size:11px;white-space:nowrap}.failed-actions{display:flex;gap:8px;margin-top:13px}.failed-actions button{flex:1;min-width:0;min-height:44px}.failed-actions .manual-primary{background:var(--soft);color:var(--blue);border:1px solid #c8d8ff;border-radius:12px;font-weight:800}.failed-actions .retry-secondary{background:#fff;border:1px solid var(--line);border-radius:12px;font-weight:700}.just-added{display:inline-flex;border-radius:6px;background:var(--soft);color:var(--blue);padding:2px 6px;margin-top:5px;font-size:10px;font-weight:800}.settled-message{background:#eaf6f0;border-radius:12px;padding:14px;color:#20664e;font-weight:750;margin-bottom:12px}.wrap-title{word-break:keep-all;overflow-wrap:anywhere}
+
+.fab-scrim{position:absolute;inset:34px 0 0;background:rgba(20,29,48,.32);z-index:9;border:0;width:100%;cursor:default}
+.fab-sheet{z-index:11}.fab{z-index:12}
+.toast{position:absolute;left:18px;right:18px;bottom:157px;padding:13px 16px;border-radius:13px;background:#203249;color:#fff;z-index:13;box-shadow:0 10px 22px rgba(0,0,0,.15);font-weight:650;font-size:13px}
+.review-nudge .symbol{background:#fff;color:var(--blue)}
+.compare tr.diff td{background:#edf3ff;font-weight:700}.compare tr.diff td:first-child{color:var(--blue)}
+.mini-badge{display:inline-flex;background:var(--soft);color:var(--blue);border-radius:7px;padding:4px 7px;font-size:11px;font-weight:800;margin-left:9px}
+.step-tap{width:100%;display:flex;align-items:center;gap:12px;min-height:67px;padding:9px 0;text-align:left;border-bottom:1px solid var(--line)}.step-tap:last-child{border-bottom:0}.step-tap .text{flex:1}.step-tap strong{font-size:13px}.step-tap .push{color:var(--blue);font-size:19px}
+.progress-loader{width:46px;height:46px;border:5px solid #dce5fb;border-top-color:var(--blue);border-radius:50%;animation:spin 1s linear infinite;margin:48px auto 20px}@keyframes spin{to{transform:rotate(360deg)}}
+.review-choice-meta{font-size:11px;color:var(--blue);font-weight:700;margin-left:auto}
+body:not(.facilitator) .info{display:none}body:not(.facilitator) .workspace{gap:0}
+.scenario-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}.scenario-grid button{border:1px solid #dce2ec;background:#fff;border-radius:10px;padding:10px 6px;font-size:12px;min-height:44px;text-align:left}
+.scenario-grid button[aria-pressed="true"]{background:#eaf0ff;border-color:#2354C7;color:#2354C7;font-weight:800}
+.facilitator-log{display:grid;grid-template-columns:1fr 1fr;gap:6px}.facilitator-log input{grid-column:span 2;padding:12px;border:1px solid #cbd4df;border-radius:9px;min-width:0}.facilitator-log button{border:1px solid #cbd4df;background:#fff;border-radius:9px;padding:9px;font-size:12px;min-height:44px}.facilitator-log span{grid-column:span 2;font-size:12px;color:#667184}
+.control select{min-height:40px;border:1px solid #d9dee8;border-radius:9px;padding:6px;background:white;color:#202020;max-width:145px}
+.high-volume{margin-top:8px}.high-volume .step-tap{min-height:55px}.experiment-hint{border-radius:9px;background:#f1f3f5;color:#596575;padding:10px 11px;font-size:12px;line-height:1.5;margin-bottom:12px}
+@media(max-width:880px){.workspace{display:block;padding:16px 10px 32px}.info{width:min(100%,420px);margin:auto;padding:0 4px 16px}.info h1{font-size:24px}.info p{font-size:13px;margin-bottom:12px}.control{padding:10px 0}.control label{margin-bottom:5px}.note{margin-top:10px}.shell{margin:12px auto 0;width:min(390px,100%);height:min(820px,78vh);min-height:640px;border-width:6px;border-radius:30px}.scroll{padding-bottom:165px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+
+/* V3.5: Participant-facing unmoderated usability study */
+body.self-testing .workspace{padding-top:130px}
+.self-cover{position:fixed;inset:0;z-index:100;background:rgba(238,241,247,.97);padding:16px;display:flex;align-items:center;justify-content:center;overflow-y:auto}
+.self-cover[hidden], .self-taskbar[hidden], .self-finish[hidden] {display:none!important}
+.self-card{width:min(100%,470px);max-height:94vh;overflow:auto;border:1px solid #e3e7ee;background:#fff;box-shadow:0 22px 85px rgba(26,44,80,.13);border-radius:24px;padding:24px}
+.self-step{font-size:11px;letter-spacing:.12em;color:#2354c7;font-weight:800}
+.self-card h1{font-size:24px;line-height:1.42;margin:11px 0 12px}
+.self-card p{font-size:13px;line-height:1.7;color:#667184}
+.self-card select{width:100%;min-height:48px;padding:10px;border-radius:11px;border:1px solid #d8dfe9;background:#fff}
+.self-consent{border-radius:12px;padding:14px;background:#f3f5f8;display:flex;align-items:flex-start;gap:11px;font-size:13px;line-height:1.7;margin:18px 0}
+.self-consent input{margin-top:4px;width:19px;height:19px;accent-color:#2354c7;flex-shrink:0}
+.self-start{width:100%;border:0;border-radius:13px;background:#2354c7;color:#fff;font-weight:800;min-height:52px}
+.self-start:disabled{background:#aeb7c9;cursor:not-allowed}
+.self-taskbar{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:20;background:#fff;border:1px solid #dfe5ed;box-shadow:0 8px 28px rgba(20,40,77,.12);border-radius:17px;width:min(calc(100% - 20px),720px);padding:11px 14px;display:flex;align-items:center;gap:12px}
+.self-taskbar small{color:#2354c7;font-size:11px;font-weight:800}
+.self-taskbar strong{display:block;font-size:13px;line-height:1.45}
+.self-taskbar .self-help{font-size:11px;color:#667184;margin-top:3px}
+.self-taskbar .self-copy{min-width:0;flex:1}
+.self-taskbar button{border-radius:10px;min-height:42px;padding:8px 12px;font-size:12px;font-weight:750;white-space:nowrap}
+.self-taskbar .self-skip{background:#f2f3f5;color:#566071}
+.self-taskbar .self-next{background:#2354c7;color:#fff}
+.self-taskbar .self-next:disabled{opacity:.5}
+.self-finish{position:fixed;inset:0;background:#f0f3f8;z-index:98;display:flex;align-items:center;justify-content:center;padding:14px}
+.self-finish .self-card{max-width:510px}
+.self-results-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.self-results-actions button{padding:12px 6px;min-height:48px;background:#eaf0ff;color:#2354c7;border-radius:11px;font-weight:800}
+.self-results-actions button:first-child{background:#2354c7;color:#fff}
+.self-backup{width:100%;height:140px;border:1px solid #d8dfe9;border-radius:10px;padding:10px;font-family:monospace;font-size:10px;margin-top:10px;resize:vertical}
+.self-card .self-tasks-done{font-size:13px;color:#526172;margin-bottom:15px}
+@media(max-width:600px){
+ body.self-testing .workspace{padding-top:145px}
+ .self-taskbar{top:5px;display:grid;grid-template-columns:1fr auto auto;gap:6px}
+ .self-taskbar .self-copy{grid-column:1/-1}
+ .self-taskbar .self-skip{grid-column:2}
+ .self-taskbar .self-next{grid-column:3}
+ .self-card{padding:20px}
+ .self-card h1{font-size:22px}
+}
+</style></head>
+<body>
+<section class="self-cover" id="selfIntro" aria-label="사용성 테스트 시작">
+  <div class="self-card">
+    <div class="self-step">AI TRAVEL ASSISTANT / 10인 테스트</div>
+    <h1>여행 앱을 잠깐 사용해 볼까요?</h1>
+    <p>총 <strong>5개의 짧은 과제</strong>를 수행해 주세요. 답이 정해진 조작법을 맞히는 시험은 아니에요. 평소처럼 눌러보면 돼요.</p>
+    <p>실제 사진을 업로드하거나 결제하는 앱이 아니에요. 화면에 보이는 영수증·금액은 모두 가짜 예시예요.</p>
+    <label for="selfParticipant"><strong>배정받은 참가자 번호</strong></label>
+    <select id="selfParticipant" aria-label="참가자 번호">
+      <option value="">참가자 번호를 선택해 주세요</option>
+      <option value="P01">P01</option><option value="P02">P02</option><option value="P03">P03</option><option value="P04">P04</option><option value="P05">P05</option><option value="P06">P06</option><option value="P07">P07</option><option value="P08">P08</option><option value="P09">P09</option><option value="P10">P10</option>
+    </select>
+    <label class="self-consent"><input type="checkbox" id="selfConsent"><span>테스트 중 화면 이동, 버튼 선택, 체류 시간 및 AI 금액 확인 결과를 <strong>내 브라우저에 기록</strong>하는 데 동의해요. 기록은 자동 전송되지 않으며, 종료 후 결과 파일을 내가 직접 공유해요. 원하지 않으면 시작하지 않아도 돼요.</span></label>
+    <button type="button" class="self-start" id="selfStart" disabled>테스트 시작하기</button>
+    <p style="margin:14px 0 0;font-size:11px">이름·이메일·사진·금융정보는 요청하거나 수집하지 않아요. 브라우저를 닫으면 기록이 없어질 수 있으니 마지막에 결과를 꼭 저장해 주세요.</p>
+  </div>
+</section>
+<div class="self-taskbar" id="selfTaskbar" hidden aria-live="polite">
+  <div class="self-copy"><small id="selfTaskProgress"></small><strong id="selfTaskPrompt"></strong><div class="self-help" id="selfTaskStatus"></div></div>
+  <button class="self-skip" id="selfSkip" type="button">건너뛰기</button>
+  <button class="self-next" id="selfNext" type="button" disabled>다음 과제</button>
+</div>
+<section id="selfFinish" class="self-finish" hidden aria-label="테스트 종료">
+ <div class="self-card">
+  <div class="self-step">FINISHED</div>
+  <h1>테스트를 마쳤어요 🎉</h1>
+  <p class="self-tasks-done" id="selfSummary"></p>
+  <p><strong>마지막으로 결과 파일을 저장해 주세요.</strong> 결과는 이 기기에만 있고 네트워크로 자동 전송되지 않아요.</p>
+  <div class="self-results-actions">
+    <button type="button" id="selfDownload">결과 JSON 저장</button>
+    <button type="button" id="selfShowCopy">텍스트로 복사</button>
+  </div>
+  <textarea class="self-backup" id="selfBackup" readonly hidden aria-label="결과 JSON 텍스트"></textarea>
+  <p style="font-size:11px">친구에게 JSON 파일만 보내면 돼요. 아이폰에서 저장이 안 되면 오른쪽 버튼으로 결과 텍스트를 펼쳐 복사해서 전달해 주세요.</p>
+  <div class="self-results-actions"><button type="button" id="selfDelete" style="background:#f1f3f5;color:#526070">기기 기록 삭제</button><button type="button" id="selfReDownload">다시 저장</button></div>
+ </div>
+</section>
+<main class="workspace"><aside class="info" id="facilitatorPanel" aria-label="진행자 전용 패널"><div class="eyebrow">UX RESEARCH / V3.5 · SELF TEST</div><h1>보여줄 것은 줄이고,<br>판단할 것은 분명하게.</h1><p>기존 V3 코발트 블루와 FAB는 유지했어. 여기는 실제 데이터를 저장하지 않는 <b>UX 비교용 프로토타입</b>이야. 아래 설정을 바꾸거나 모바일 화면을 눌러서 흐름을 시험해 봐.</p>
+<div class="control"><label>여행 시점</label><div class="segments" id="phaseControls"><button data-setphase="before">여행 전</button><button data-setphase="during">여행 중</button><button data-setphase="after">여행 후</button></div></div>
+<div class="control"><label>예산 상태</label><div class="segments" id="budgetControls"><button data-setbudget="on">예산 설정</button><button data-setbudget="off">예산 없음</button></div></div>
+<div class="control"><label>시나리오 · 한번에 설정</label><div class="scenario-grid">
+<button data-scenario="first" type="button">① 첫 사용</button><button data-scenario="correct" type="button">② AI 정답</button><button data-scenario="wrong" type="button">③ AI 오답</button><button data-scenario="offline" type="button">④ 오프라인 촬영</button><button data-scenario="after" type="button">⑤ 귀국 후 정리</button><button data-scenario="ambiguous" type="button">⑥ 애매한 중복</button><button data-scenario="solo" type="button">⑦ 혼자 여행</button>
+</div></div><div class="control"><label>실험 세부 조건</label><div class="toggles">
+<label class="toggle"><span>검토 건수 2 / 12</span><select id="reviewVolume"><option value="2">2건</option><option value="12">12건</option></select></label>
+<label class="toggle"><span>AI 선택</span><select id="aiCondition"><option value="correct">정답 €390</option><option value="wrong">오답 €360</option><option value="none">추천 없음</option></select></label>
+<label class="toggle"><span>중복 유형</span><select id="duplicateCondition"><option value="identical">동일 금액</option><option value="ambiguous">€12 / €12.50</option></select></label>
+<label class="toggle"><span>여행 형태</span><select id="partyCondition"><option value="group">동행</option><option value="solo">혼자</option></select></label>
+<label class="toggle"><span>검토 카드 위치</span><select id="reviewPosition"><option value="above">비용 위</option><option value="below">비용 아래</option></select></label>
+</div></div><div class="control"><label>데모 조건</label><div class="toggles"><label class="toggle"><span>확인할 내역 있음</span><input id="reviewToggle" type="checkbox" checked></label><label class="toggle"><span>전송 대기 상황</span><input id="offlineToggle" type="checkbox"></label><label class="toggle"><span>등록된 비용 0건</span><input id="emptyToggle" type="checkbox"></label></div></div></div>
+<div class="note">개선 핵심: 검토 카드 조건부 노출 · 원본 보며 AI 확인 · 중복 diff 비교 · 성공 내역 접기 · 44px 터치 영역 · FAB 스크롤 회피 · 실청구액 선택 입력 · AI 실패 시 직접 입력 · 저장 후 목록 반영. <br>전송 대기 상태는 <b>시각적 시연</b>이야. 이 HTML은 사진첩을 읽거나 실제 파일을 보관·전송하지 않아. 카메라/사진 선택, 읽기 중 1.5초, 저장 결과는 화면 흐름만 시뮬레이션해.</div>
+<div class="control"><label>사용성 테스트 · 이 기기에서만 기록</label>
+<div class="facilitator-log"><input id="participantCode" aria-label="참가자 코드" placeholder="P1" value="P1" maxlength="20"><button type="button" data-research="start">기록 시작</button><button type="button" data-research="stop">기록 종료</button><button type="button" data-research="export">JSON 내려받기</button><button type="button" data-research="clear">로그 삭제</button><button type="button" data-research="reset">시나리오 초기화</button><span id="logStatus" role="status">기록 꺼짐</span></div>
+</div><div class="note">진행자 패널은 <code>?facilitator=1</code>에서만 표시돼. 참가자는 기본 주소를 사용해. 단축키 <kbd>Alt+Shift+P</kbd>로도 전환 가능해. 로그는 이 브라우저 저장소에만 보관되며 서버로 전송되지 않아. <b>실제 사진·문서·개인정보는 입력하지 말아 줘.</b></div>
+</aside><div class="shell" aria-label="Travel Assistant V3.5 모바일 화면"><div class="statusbar"><span>9:41</span><span>●●● ▰</span></div><div class="scroll" id="content"></div><div id="overlay"></div><div id="navigation"></div></div></main>
+<script>
+const state={aiSuggested:true,scenario:"correct",reviewVolume:2,extraReviewIds:[],reviewPosition:"above",aiCondition:"correct",duplicateCondition:"identical",partyCondition:"group",offlineCount:0,selectedExtraId:null,extraAmount:null,toast:'',uploadRunId:0,uploadEntry:'photo',screen:'home',phase:'during',budget:true,review:true,offline:false,empty:false,fab:false,filter:'all',reviewAmount:null,confirmedReview:false,confirmedDupe:false,showAll:false,detailsExpanded:false,amount:'',merchant:'',currency:'EUR',note:'',saved:false,addedExpenses:[],selectedExpenseId:null,manualSource:'new',retryCount:0,failedResolved:false,settled:false,bookingReviewAmount:'360',duplicateAnswer:null};
+// Research helpers: only interaction metadata; no file contents, amounts typed, merchant names or passwords.
+const query=new URLSearchParams(location.search);
+const isFacilitator=query.get('facilitator')==='1'||query.get('admin')==='1';
+document.body.classList.toggle('facilitator',isFacilitator);
+let sessionId='';let tracking=false;let events=[];let screenEntered=Date.now();
+const LOG_KEY='ata_v34_research_log';
+try{const prev=JSON.parse(localStorage.getItem(LOG_KEY)||'[]');if(Array.isArray(prev))events=prev.filter(x=>x&&typeof x==='object').slice(-3000);}catch(err){}
+const safeLogValue=x=>x===undefined?undefined:typeof x==='boolean'||typeof x==='number'?x:String(x).slice(0,100);
+function logEvent(action,detail={}){
+ if(!tracking)return;
+ const record={timestamp:new Date().toISOString(),elapsedMs:Date.now()-screenEntered,sessionId,participant:(document.getElementById('participantCode')?.value||'P1').slice(0,20),scenario:state.scenario,screen:state.screen,action};
+ for(const [key,val] of Object.entries(detail)) if(['target','value','previous','next','count','source','kind','condition','decision','correct','elapsedMs','reviewPosition'].includes(key)) record[key]=safeLogValue(val);
+ events.push(record);if(events.length>3000)events=events.slice(-3000);
+ try{localStorage.setItem(LOG_KEY,JSON.stringify(events));}catch(err){}
+ updateLogStatus();
+}
+function updateLogStatus(){const element=$('#logStatus');if(element)element.textContent=(tracking?'● 기록 중':'○ 기록 꺼짐')+` · ${events.length}개 이벤트`}
+function newExtras(count){state.extraReviewIds=Array.from({length:Math.max(0,count-2)},(_,i)=>i+1)}
+const pendingReview=()=>state.review?countPendingReview()+state.extraReviewIds.length:0;
+function preset(name){
+ Object.assign(state,{scenario:name,screen:'home',phase:'during',budget:true,review:true,offline:false,empty:false,fab:false,filter:'all',reviewAmount:null,confirmedReview:false,confirmedDupe:false,showAll:false,detailsExpanded:false,amount:'',merchant:'',currency:'EUR',note:'',saved:false,addedExpenses:[],selectedExpenseId:null,manualSource:'new',retryCount:0,failedResolved:false,settled:false,bookingReviewAmount:'360',duplicateAnswer:null,reviewVolume:2,reviewPosition:'above',aiCondition:'correct',duplicateCondition:'identical',partyCondition:'group',offlineCount:0,selectedExtraId:null,extraAmount:null,toast:''});
+ if(name==='first'){state.phase='before';state.empty=true;state.budget=false;state.review=false;}
+ else if(name==='wrong'){state.aiCondition='wrong'}
+ else if(name==='offline'){state.offline=true;state.offlineCount=3;}
+ else if(name==='after'){state.phase='after';state.review=false;}
+ else if(name==='ambiguous'){state.duplicateCondition='ambiguous';}
+ else if(name==='solo'){state.partyCondition='solo';}
+ state.aiSuggested=state.aiCondition!=='none';newExtras(state.reviewVolume);state.uploadRunId++;screenEntered=Date.now();logEvent('scenario_set',{value:name});render();
+}
+function startResearch(){
+ // Each test run uses a fresh session id and explicit consent by the facilitator.
+ events=[];sessionId='S'+Date.now().toString(36);tracking=true;try{localStorage.removeItem(LOG_KEY)}catch(err){};
+ screenEntered=Date.now();logEvent('test_started',{condition:state.aiCondition});
+}
+function stopResearch(){logEvent('test_stopped');tracking=false;updateLogStatus();}
+function exportResearch(){
+ const blob=new Blob([JSON.stringify({format:'ATA-V3.4-research',notice:'Browser-only demo click event metadata, not actual file contents',events},null,2)],{type:'application/json;charset=utf-8'});
+ const url=URL.createObjectURL(blob),anchor=document.createElement('a');anchor.href=url;anchor.download='travel-ux-v3.4-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(anchor);anchor.click();anchor.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function facilitatorSync(){
+ for(const id of ['reviewVolume','aiCondition','duplicateCondition','partyCondition','reviewPosition']){const el=document.getElementById(id);if(el&&el.value!==String(state[id]))el.value=String(state[id]);}
+ const sc=state.scenario;document.querySelectorAll('[data-scenario]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.scenario===sc)));
+ updateLogStatus();
+}
+document.addEventListener('keydown',e=>{if(e.altKey&&e.shiftKey&&e.key.toLowerCase()==='p'){document.body.classList.toggle('facilitator');e.preventDefault();}});
+
+const $=s=>document.querySelector(s);const escaped=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+const screenTop=(k,title,more='')=>`<div class="pagehead"><button class="back" data-go="${state.screen==='expense'||state.screen==='booking'?'list':state.screen==='review'||state.screen==='duplicate'||state.screen==='extraReview'?'uploads':state.screen==='evidence'?(state.evidenceFrom||'home'):'home'}" aria-label="뒤로 가기">‹</button><h1>${title}</h1>${more?`<button class="more" data-action="more" aria-label="더보기">···</button>`:''}</div>`;
+const row=(kind,title,secondary,price,date)=>`<button class="listrow" data-go="${kind}" aria-label="${title} 상세 보기"><span class="iconbox">${kind==='booking'?'▣':'◧'}</span><span class="grow"><span class="c-title">${title}</span><div class="date">${secondary} · ${date}</div></span><span class="price">${price}<div class="date">›</div></span></button>`;
+const formatAmount=e=>`${e.currency==='KRW'?'₩':'€'}${Number(e.amount).toLocaleString('en-US',{minimumFractionDigits:e.currency==='EUR'?2:0,maximumFractionDigits:e.currency==='EUR'?2:0})}`;
+const countPendingReview=()=> (state.review&&!state.confirmedReview?1:0)+(state.review&&!state.confirmedDupe?1:0);
+function screenHome(){let phase=state.phase;let stage=phase==='before'?'여행 전':phase==='during'?'여행 중':'여행 후';let addedKRW=state.addedExpenses.reduce((sum,e)=>sum+Math.round(Number(e.amount)*(e.currency==='KRW'?1:1600)),0);let totalCost=state.empty?addedKRW:2650000+addedKRW+(Number(state.bookingReviewAmount)-360)*1600;let cost='₩'+totalCost.toLocaleString('ko-KR');let remaining=3500000-totalCost;let remainingText=remaining>=0?(Math.round(remaining/10000).toLocaleString('ko-KR')+'만 원 남음'):(Math.round(Math.abs(remaining)/10000).toLocaleString('ko-KR')+'만 원 초과');let budget=state.budget&&!state.empty?`<div class="budgetwrap"><div class="row"><span class="caption">설정한 내 예산</span><strong>₩3,500,000</strong></div><div class="progress"><i style="width:${Math.min(100,Math.max(0,Math.round(totalCost/3500000*100)))}%"></i></div><div class="row"><span class="small">현재 등록된 비용 기준</span><strong style="font-size:13px;color:var(--blue)">${remainingText}</strong></div><button class="text-action" data-go="budget">예산 보기 · 바꾸기 ›</button></div>`:!state.budget?`<button class="text-action" data-go="budget">필요하면 예산도 정할 수 있어요 ›</button>`:'';
+let count=pendingReview();let reviewNudge=count?`<button class="compact-action review-nudge" data-go="uploads"><span class="symbol">!</span><span class="grow"><span class="c-title">확인할 내역 ${count}건</span><div class="minor">금액이나 중복 여부를 확인해 주세요</div></span><span class="arrow">›</span></button>`:'';
+let offline=state.offlineCount>0?`<button class="compact-action" style="background:var(--warnbg)" data-go="offline"><span class="symbol" style="color:var(--warn)">⌁</span><span class="grow"><span class="c-title">추가한 파일 ${state.offlineCount}개 · 전송 대기</span><div class="minor">직접 추가한 파일을 보내지 못했어요</div></span><span class="arrow" style="color:var(--warn)">›</span></button>`:'';
+let after=phase==='after'?`<div class="card" style="background:var(--soft);border-color:transparent"><div class="c-title">귀국 후에도 영수증을 올릴 수 있어요</div><div class="caption" style="margin:5px 0 7px">빠진 비용을 모아서 추가하고 정산을 마무리해요.</div><button class="outlined" data-go="uploads">사진·PDF 추가하기</button></div>`:'';
+let before=phase==='before'?`<div class="card"><div class="sectitle" style="margin:0 0 7px"><h2>다가오는 예약</h2><button class="text-action" data-go="list">예약 보기 ›</button></div>${row('booking','마요르카 숙소','예약 확정','€'+state.bookingReviewAmount,'5.10')}</div>`:'';
+let empty=state.empty?`<div class="surface"><div class="c-title">아직 기록한 비용이 없어요</div><div class="caption" style="margin:7px 0 11px">영수증 한 장이면 시작할 수 있어요.</div><button class="outlined" data-action="fab">영수증 추가</button></div>`:'';
+let recent=!state.empty?`<div class="sectitle"><h2>최근 기록</h2><button class="text-action" data-go="list">모두 보기 ›</button></div><div class="card" style="padding:4px 16px">${row('expense','바르셀로나 카페','식비','€12','5.11')}</div>`:'';
+let settling=state.partyCondition==='group'&&phase!=='before'&&!state.empty?`<div class="surface"><div class="row"><span class="grow"><strong style="font-size:14px">동행자 A에게 받을 돈 ₩85,000</strong></span><button class="text-action" data-go="settlement">정산 ›</button></div></div>`:'';
+let topPriority=offline||(state.reviewPosition==='above'?reviewNudge:'')||(phase==='after'?after:'');let extra=[];
+if(offline&&count)extra.push(`확인할 내역 ${count}건`);
+if(phase==='after'&&(offline||reviewNudge))extra.push('귀국 후 영수증 추가');
+if(extra.length&&topPriority.includes('<span class="arrow"'))topPriority=topPriority.replace('</span><span class="arrow"',`<div class="minor">${extra.join(' · ')}도 있어요</div></span><span class="arrow"`);
+return `<div class="top"><div><div class="kicker">SPAIN · TRIP</div><div class="tripname">스페인 여행</div><div class="meta">2027.05.09 — 05.21</div></div><span class="stage">${stage}</span></div>${topPriority}<section class="card"><div class="hero-label">기록한 여행 비용</div><div class="money">${cost}</div>${state.empty?'':'<div style="height:7px"></div>'}${budget}</section>${state.reviewPosition==='below'&&!offline?reviewNudge:''}${empty}${phase==='before'?before:''}${recent}${settling}`;}
+function screenList(){
+ let count=pendingReview();
+ let review=count?`<button class="compact-action" data-go="uploads"><span class="symbol">!</span><span class="grow"><span class="c-title">확인할 내역 ${count}건</span><div class="minor">금액이나 중복 여부를 확인해 주세요</div></span><span class="arrow">›</span></button>`:'';
+ let saved=(state.filter==='booking')?'':state.addedExpenses.map(e=>`<button class="listrow" data-action="openSaved" data-saved-id="${e.id}" aria-label="${escaped(e.merchant)} 비용 상세 보기"><span class="iconbox">◧</span><span class="grow"><span class="c-title">${escaped(e.merchant)}</span><div class="date">식비 · 5.11</div><span class="just-added">방금 기록함</span></span><span class="price">${formatAmount(e)}<div class="date">›</div></span></button>`).join('');
+ let original=(state.filter==='booking')?row('booking','마요르카 숙소','예약 확정','€'+state.bookingReviewAmount,'5.10'):(state.filter==='expense')?row('expense','바르셀로나 카페','식비','€12','5.11')+row('expense','타파스 바','식비','€47.50','5.11'):row('expense','바르셀로나 카페','식비','€12','5.11')+row('expense','타파스 바','식비','€47.50','5.11')+row('booking','마요르카 숙소','예약 확정','€'+state.bookingReviewAmount,'5.10');
+ return `<div class="top"><div><div class="tripname">내역</div><div class="meta">스페인 여행 · 기록과 예약</div></div></div><div class="filters">${[['all','전체'],['expense','비용'],['booking','예약']].map(([v,n])=>`<button class="filter ${state.filter===v?'active':''}" data-filter="${v}">${n}</button>`).join('')}</div>${review}<div class="sectitle"><h2>최근 기록</h2><button class="text-action" data-action="sort">최신순 ↓</button></div><div class="group-heading">2027년 5월</div><div class="card" style="padding:4px 16px">${saved}${original}</div>`;}
+function screenExpense(){
+ const e=state.addedExpenses.find(v=>v.id===state.selectedExpenseId);
+ const name=e?escaped(e.merchant):'바르셀로나 카페';
+ const amount=e?formatAmount(e):'€12.00';
+ const krw=e?(e.currency==='KRW'?'원화로 기록한 비용':`약 ${Math.round(Number(e.amount)*1600).toLocaleString('ko-KR')}원 · 참고 환율`):'약 19,200원 · 참고 환율';
+ const method=e?(e.source==='failed'?'영수증을 보고 직접 입력':e.source==='duplicate'?'영수증 사진':'직접 입력'):'영수증 사진';
+ const evidence=e&&e.source!=='failed'?'':`<div class="sectionheading">원본</div><button class="card actionrow" style="margin-bottom:0" data-go="evidence"><span>▧ &nbsp;${e?.source==='failed'?'흐린_영수증.jpg':e?.source==='duplicate'?'카페_재촬영.jpg':'카페_영수증.jpg'}</span><span style="color:var(--blue)">보기 ›</span></button>`;
+ return `${screenTop('','비용 상세',true)}<section class="card"><div class="row"><span class="badge blue">개인 기록</span><span class="small">식비</span></div><div class="sectionheading" style="margin:17px 0 0">${name}</div><div class="largeamount">${amount}</div><div class="statusline">${krw}</div></section><div class="sectionheading">기본 정보</div><div class="card"><div class="kv"><span>사용한 날</span><strong>2027.05.11</strong></div><div class="kv"><span>기록 방법</span><strong>${method}</strong></div></div>${e&&e.source==='new'?'':evidence}<div class="sectionheading">추가 정보</div><div class="surface"><button class="actionrow" data-action="charge">실제 원화 청구액 추가 (선택)<span style="color:var(--blue)">›</span></button>${state.detailsExpanded?`<div class="tone">카드 명세서에서 확인한 금액을 입력할 수 있어요.</div>`:''}</div>`;}
+function screenBooking(){return `${screenTop('','예약 상세',true)}<section class="card"><span class="badge blue">예약 확정</span><div class="sectionheading" style="margin:20px 0 0">마요르카 숙소</div><div class="largeamount">€${Number(state.bookingReviewAmount).toFixed(2)}</div><div class="statusline">예약 총액 · 약 ${(Number(state.bookingReviewAmount)*1600).toLocaleString('ko-KR')}원 (참고 환율)</div></section><div class="sectionheading">결제 정보</div><div class="card"><div class="kv"><span>지금까지 결제한 금액</span><strong>입력 전</strong></div><div class="kv"><span>남은 잔금</span><strong>아직 계산할 수 없어요</strong></div><button class="actionrow" data-action="charge">필요하면 결제 정보 추가 <span style="color:var(--blue)">›</span></button>${state.detailsExpanded?`<div class="tone">결제한 금액을 입력하거나 명세서를 추가할 수 있어요.</div>`:''}</div><div class="sectionheading">예약 파일</div><button class="card actionrow" data-go="evidence"><span>▧ &nbsp;숙소_예약.pdf</span><span style="color:var(--blue)">보기 ›</span></button>`;}
+function screenUploads(){
+ const count=pendingReview(), retry=state.failedResolved?0:1;
+ const done=count===0&&retry===0;
+ const heading=count>0?'이것만 확인해 주세요':retry>0?'금액·중복 확인은 끝났어요':'파일 정리를 마쳤어요';
+ const pending=count?`<div class="card" style="padding:3px 15px">${state.review&&!state.confirmedReview?`<button class="step-tap" data-go="review"><span class="symbol">?</span><span class="text"><strong>숙소 예약 금액</strong><span class="small" style="display:block">€360과 €390 중 확인</span></span><span class="push">›</span></button>`:''}${state.review&&!state.confirmedDupe?`<button class="step-tap" data-go="duplicate"><span class="symbol">≈</span><span class="text"><strong>비슷한 영수증</strong><span class="small" style="display:block">기존 기록과 같은 건지 비교</span></span><span class="push">›</span></button>`:''}${state.extraReviewIds.map(i=>`<button class="step-tap" data-extra="${i}"><span class="symbol">?</span><span class="text"><strong>추가 영수증 ${i}</strong><span class="small" style="display:block">금액을 확인해 주세요</span></span><span class="push">›</span></button>`).join('')}</div>`:'';
+ const fail=retry?`<div class="sectitle"><h2>다시 시도할 파일</h2></div><div class="card"><div class="row"><span class="symbol" style="background:var(--warnbg);color:var(--warn)">!</span><div class="grow"><div class="c-title">${state.retryCount?'다시 읽지 못했어요':'글자를 읽지 못했어요'}</div><div class="small">흐린_영수증.jpg</div></div></div><div class="failed-actions"><button class="retry-secondary" data-action="retry">다시 시도</button><button class="manual-primary" data-action="manualFailed">직접 입력</button></div></div>`:'';
+ const doneAction=count===0?`<button class="outlined" style="margin-bottom:16px" data-go="home">홈으로 돌아가기</button>`:'';
+ return `${screenTop('','가져온 파일')}<div class="card"><div class="c-title">${state.reviewVolume+3}개 파일을 확인했어요</div><div class="stats-three"><div class="grayrow"><div class="label">✓ 자동 기록</div><strong>2건</strong></div><div class="grayrow"><div class="label">! 확인</div><strong>${count}건</strong></div><div class="grayrow"><div class="label">↻ 다시 시도</div><strong>${retry}건</strong></div></div></div><div class="sectitle"><h2>${heading}</h2></div>${pending}${done?`<div class="settled-message">5개 파일을 모두 정리했어요</div>`:''}${fail}${doneAction}<button class="actionrow" style="padding:10px 6px" data-action="expandSuccess"><strong>자동으로 기록한 2건 ${state.showAll?'접기':'보기'}</strong><span style="color:var(--blue)">${state.showAll?'⌃':'⌄'}</span></button>${state.showAll?`<div class="card" style="padding:3px 15px">${row('expense','바르셀로나 카페','€12 · 기록 완료','', '5.11')}${row('expense','타파스 바','€47.50 · 기록 완료','','5.11')}</div>`:''}`;}
+function screenReview(){
+ const recommended=state.aiCondition==='none'?null:(state.aiCondition==='wrong'?'360':'390');
+ const note=recommended?`€${recommended}으로 읽었어요. 맞으면 그대로 기록해요.`:'예약 확인서에 두 금액이 있어요. 원본을 보고 골라 주세요.';
+ const mainHighlight=state.aiCondition==='correct';
+ const roomHighlight=state.aiCondition==='wrong';
+ return `${screenTop('','금액만 확인해 주세요')}<div class="caption" style="margin-bottom:14px">${note}</div><div class="evidence"><h3>예약 확인서 · 금액 부분</h3><div class="paper"><div class="secondarytotal" style="${roomHighlight?'border:2px solid #2354C7;background:#eef3ff;border-radius:5px;padding:5px':''}"><span>Room total</span><span>€360.00</span></div><div class="secondarytotal"><span>Tax / service</span><span>€30.00</span></div><div class="hilite" style="${!mainHighlight?'outline:1px solid #c8cdd6;border-color:#c8cdd6;background:#f3f3f3;':''}"><span>Booking total</span><span>€390.00</span></div></div><button class="text-action" data-go="evidence">원본 전체 보기 ›</button></div><div class="sectionheading">최종 예약 총액은 얼마인가요?</div>${[['360','€360.00'],['390','€390.00']].map(([v,label])=>`<label class="choice ${state.reviewAmount===v?'selected':''}"><input name="reviewAmount" type="radio" value="${v}" ${state.reviewAmount===v?'checked':''}><span>${label}</span>${recommended===v?'<span class="review-choice-meta">AI가 읽은 값</span>':''}</label>`).join('')}`;
+}
+
+function screenDuplicate(){
+ const amb=state.duplicateCondition==='ambiguous';
+ const price=amb?'€12.50':'€12.00';
+ const intro=amb?'2개 항목이 같고 금액이 달라요.':'가게 · 날짜 · 금액, 3개 항목이 같아요.';
+ return `${screenTop('','이미 등록한 내역일까요?')}<div class="caption" style="margin-bottom:12px">${intro}</div><table class="compare" aria-label="기존 기록과 새 영수증 비교"><thead><tr><th>비교</th><th>기존 기록</th><th>새 영수증</th></tr></thead><tbody><tr><td>가게</td><td>바르셀로나 카페</td><td>바르셀로나 카페</td></tr><tr><td>날짜</td><td>5월 11일</td><td>5월 11일</td></tr><tr class="${amb?'diff':''}"><td>금액</td><td><strong>€12.00</strong></td><td><strong>${price}</strong></td></tr><tr class="diff"><td>출처</td><td>직접 입력</td><td>새 사진</td></tr></tbody></table><button class="actionrow" data-go="evidence">새 영수증 원본 확인 <span style="color:var(--blue)">보기 ›</span></button>`;
+}
+function screenExtraReview(){
+ const id=state.selectedExtraId;
+ return `${screenTop('','금액 확인')}<div class="caption" style="margin-bottom:14px">추가 영수증 ${id}</div><div class="evidence"><h3>영수증 일부</h3><div class="paper"><div class="secondarytotal"><span>Items</span><span>€14.00</span></div><div class="hilite"><span>Total</span><span>€15.00</span></div></div></div><div class="sectionheading">최종 금액이 얼마인가요?</div>${['14.00','15.00'].map(v=>`<label class="choice ${state.extraAmount===v?'selected':''}"><input type="radio" name="extraAmount" value="${v}" ${state.extraAmount===v?'checked':''}><span>€${v}</span></label>`).join('')}`;
+}
+
+function screenManual(){return `${screenTop('','직접 입력')}<div class="formlabel">얼마를 썼나요?</div><div class="amountentry"><input class="field" id="cost" inputmode="decimal" placeholder="0.00" value="${escaped(state.amount)}" aria-label="금액"><select id="currency" aria-label="통화"><option value="EUR" ${state.currency==='EUR'?'selected':''}>EUR</option><option value="KRW" ${state.currency==='KRW'?'selected':''}>KRW</option></select></div><div class="formlabel">어디에 썼나요?</div><input class="field" id="merchant" value="${escaped(state.merchant)}" placeholder="가게나 사용 내용을 입력" aria-label="사용처"><button class="actionrow" style="margin-top:14px" data-action="date">5월 11일 · 식비 <span style="color:var(--blue)">바꾸기 ›</span></button><button class="actionrow" data-action="advanced">추가 정보 <span style="color:var(--blue)">${state.detailsExpanded?'접기 ⌃':'펼치기 ⌄'}</span></button>${state.detailsExpanded?`<div class="card"><div class="kv"><span>메모</span><strong>선택</strong></div><div class="kv"><span>결제한 사람</span><strong>나중에</strong></div><div class="kv"><span>공개 범위</span><strong>나만 보기</strong></div></div>`:''}`;}
+function screenSettlement(){
+ return `${screenTop('','정산')}<div class="card"><div class="caption">이번 여행 정산</div><div class="sectionheading">${state.settled?'정산 완료':'동행자 A에게 받을 돈'}</div><div class="largeamount">₩85,000</div>${state.settled?'<div class="statusline">받은 것으로 표시했어요</div>':'<div class="caption">나에게 보내면 정산 완료</div>'}</div><div class="card"><div class="kv"><span>내가 낸 공동경비</span><strong>₩220,000</strong></div><div class="kv"><span>동행자 A가 낸 공동경비</span><strong>₩50,000</strong></div><div class="kv"><span>나의 부담액</span><strong>₩135,000</strong></div></div><button class="${state.settled?'outlined':'primary'}" data-action="markSettled">${state.settled?'받음 표시 취소':'받았어요로 표시'}</button>`;}
+function screenBudget(){return `${screenTop('','예산')}<div class="card"><div class="c-title">여행 예산</div><div class="caption" style="margin-top:5px">설정하지 않아도 영수증과 비용을 기록할 수 있어요.</div><button class="outlined" style="margin-top:14px" data-action="budgettoggle">${state.budget?'예산 설정 해제':'예산 350만 원 설정'}</button></div>${state.budget?`<div class="card"><div class="hero-label">내 예산</div><div class="money">₩3,500,000</div></div>`:''}`;}
+function screenOffline(){return `${screenTop('','전송 대기 중인 파일')}<div class="card"><div class="c-title">파일 ${state.offlineCount}개가 전송을 기다려요</div><div class="caption" style="margin:10px 0 14px">인터넷에 연결되면 보낼게요.</div><button class="outlined" data-action="retryOffline">전송 다시 시도</button></div><div class="surface"><div class="small">앱에서 직접 촬영하거나 선택한 파일이에요. 사진첩의 다른 사진은 가져오지 않아요.</div></div>`;}
+function screenProcessing(){return `${screenTop('','가져온 파일')}<div class="card" style="text-align:center;margin-top:24px;padding:36px 18px"><div class="progress-loader" aria-hidden="true"></div><div class="sectionheading" style="margin:0">파일을 읽고 있어요</div></div>`;}
+function screenEvidence(){
+ const e=state.addedExpenses.find(v=>v.id===state.selectedExpenseId);
+ if(state.evidenceFrom==='expense'){
+  if(e?.source==='duplicate')return `${screenTop('','원본 보기')}<div class="evidence"><h3>카페_재촬영.jpg</h3><div class="paper" style="padding:30px 15px"><p>BARCELONA CAFE</p><div class="secondarytotal"><span>Coffee</span><span>€12.00</span></div><div class="hilite"><span>Total</span><span>€12.00</span></div></div></div>`;
+  if(e?.source==='failed')return `${screenTop('','원본 보기')}<div class="evidence"><h3>흐린_영수증.jpg</h3><div class="paper" style="padding:30px 15px;text-align:center"><div style="filter:blur(3px);line-height:2.4;color:#9c9c9c">CAFE · RECEIPT<br>··· ··· ···<br>€??.??</div></div></div>`;
+  return `${screenTop('','원본 보기')}<div class="evidence"><h3>카페_영수증.jpg</h3><div class="paper" style="padding:30px 15px"><p>BARCELONA CAFE</p><div class="secondarytotal"><span>Coffee</span><span>€12.00</span></div><div class="hilite"><span>Total</span><span>€12.00</span></div></div></div>`;
+ }
+ if(state.evidenceFrom==='duplicate')return `${screenTop('','원본 보기')}<div class="evidence"><h3>카페_재촬영.jpg</h3><div class="paper" style="padding:30px 15px"><p>BARCELONA CAFE</p><div class="secondarytotal"><span>Coffee</span><span>€12.00</span></div><div class="hilite"><span>Total</span><span>${state.duplicateCondition==='ambiguous'?'€12.50':'€12.00'}</span></div></div></div>`;
+ return `${screenTop('','원본 보기')}<div class="evidence"><h3>숙소 예약 확인서</h3><div class="paper" style="padding:30px 15px"><p>MALLORCA RESERVATION</p><div class="secondarytotal"><span>Room total</span><span>€360.00</span></div><div class="secondarytotal"><span>Tax / service</span><span>€30.00</span></div><div class="hilite"><span>Booking total</span><span>€390.00</span></div></div></div>`;
+}
+function render(){const map={home:screenHome,list:screenList,expense:screenExpense,booking:screenBooking,uploads:screenUploads,review:screenReview,extraReview:screenExtraReview,duplicate:screenDuplicate,manual:screenManual,settlement:screenSettlement,budget:screenBudget,offline:screenOffline,processing:screenProcessing,evidence:screenEvidence};const content=$("#content");content.innerHTML=(map[state.screen]||screenHome)();content.scrollTop=0;const isTop=['home','list','settlement'].includes(state.screen);$('#navigation').innerHTML=isTop?`<nav class="bottomnav" aria-label="메인 메뉴">${(state.partyCondition==='solo'?[['home','⌂','홈'],['list','▤','내역']]:[['home','⌂','홈'],['list','▤','내역'],['settlement','⇄','정산']]).map(([key,ic,label])=>`<button class="nav-item ${state.screen===key?'active':''}" data-go="${key}"><strong>${ic}</strong><span>${label}</span></button>`).join('')}</nav><button class="fab" data-action="fab" aria-label="비용 추가 메뉴" aria-expanded="${state.fab}">+</button>`: state.screen==='review'?`<div class="fixbottom"><button class="primary" data-action="saveReview" ${state.reviewAmount?"":"disabled"}>이 금액으로 기록하기</button><button class="ghost" data-go="uploads">나중에 확인하기</button></div>`:state.screen==='extraReview'?`<div class="fixbottom"><button class="primary" data-action="resolveExtra" ${state.extraAmount?'':'disabled'}>이 금액으로 기록하기</button><button class="ghost" data-go="uploads">나중에 확인하기</button></div>`:state.screen==='duplicate'?`<div class="fixbottom"><button class="primary" data-action="dupeSame">같은 지출이에요</button><button class="outlined" data-action="dupeDifferent">다른 지출이에요</button><button class="ghost" data-go="uploads">나중에 확인하기</button></div>`:state.screen==='manual'?`<div class="fixbottom"><button class="primary" data-action="saveManual">저장하기</button></div>`:'';
+$('#overlay').innerHTML=(state.fab&&isTop?`<button class="fab-scrim" data-action="closeFab" aria-label="추가 메뉴 닫기"></button><div class="fab-sheet" role="menu"><button data-action="capture"><span>▧</span>카메라로 촬영</button><button data-action="chooseFiles"><span>▤</span>사진·PDF 선택</button><button data-go="manual"><span>✎</span>직접 입력</button></div>`:'')+(state.toast?`<div class="toast" role="status">${state.toast}</div>`:'');
+for(const btn of document.querySelectorAll('[data-setphase]'))btn.setAttribute('aria-pressed',String(btn.dataset.setphase===state.phase));for(const btn of document.querySelectorAll('[data-setbudget]'))btn.setAttribute('aria-pressed',String((btn.dataset.setbudget==='on')===state.budget));$('#reviewToggle').checked=state.review;$('#offlineToggle').checked=state.offline;$('#emptyToggle').checked=state.empty;facilitatorSync();}
+function navigate(name){if(state.screen==='processing')state.uploadRunId++;if(name==='review')state.reviewAmount=state.aiCondition==='none'?null:(state.aiCondition==='wrong'?'360':'390');if(name==='evidence'){state.evidenceFrom=state.screen;logEvent('evidence_open',{source:state.evidenceFrom});}logEvent('navigation',{previous:state.screen,next:name,elapsedMs:Date.now()-screenEntered});screenEntered=Date.now();state.screen=name;state.fab=false;state.detailsExpanded=false;state.toast='';render()}
+function showToast(msg){state.toast=msg;render();window.setTimeout(()=>{if(state.toast===msg){state.toast='';render()}},2600)}
+function openManual(source='new'){
+ state.manualSource=source;state.amount='';state.merchant='';state.currency='EUR';state.filter='all';navigate('manual');
+}
+function beginImport(kind){
+ if(state.offline&&kind!=='retry'){state.offlineCount++;state.uploadEntry=kind;logEvent('offline_queued',{count:state.offlineCount,source:kind});navigate('home');showToast('저장했어요. 인터넷에 연결되면 보낼게요.');return;}
+ state.uploadEntry=kind;state.uploadRunId++;const runId=state.uploadRunId;
+ if(kind==='retry')state.retryCount++;
+ navigate('processing');
+ window.setTimeout(()=>{
+  if(state.screen==='processing'&&state.uploadRunId===runId){
+   navigate('uploads');if(kind==='retry'&&!state.failedResolved)showToast('다시 읽지 못했어요. 직접 입력할 수 있어요.');
+  }
+ },1500);
+}
+document.addEventListener('click',e=>{
+ const t=e.target.closest('[data-go],[data-action],[data-filter],[data-setphase],[data-setbudget],[data-scenario],[data-research],[data-extra]');if(!t)return;
+ if(t.dataset.research){const v=t.dataset.research;if(v==='start')startResearch();else if(v==='stop')stopResearch();else if(v==='export')exportResearch();else if(v==='clear'){events=[];try{localStorage.removeItem(LOG_KEY)}catch(e){};updateLogStatus()}else if(v==='reset')preset(state.scenario);return;}
+ if(t.dataset.scenario){preset(t.dataset.scenario);return;}
+ if(t.dataset.extra){state.selectedExtraId=Number(t.dataset.extra);state.extraAmount=null;navigate('extraReview');return;}
+ if(t.dataset.setphase){logEvent('phase_changed',{value:t.dataset.setphase});state.phase=t.dataset.setphase;state.screen='home';render();return}
+ if(t.dataset.setbudget){logEvent('budget_changed',{value:t.dataset.setbudget});state.budget=t.dataset.setbudget==='on';state.screen='home';render();return}
+ if(t.dataset.filter){state.filter=t.dataset.filter;render();return}
+ if(t.dataset.go){if(t.dataset.go==='manual'){openManual('new');return;}if(t.dataset.go==='expense')state.selectedExpenseId=null;navigate(t.dataset.go);return}
+ switch(t.dataset.action){
+  case 'fab':state.fab=!state.fab;render();break;
+  case 'closeFab':state.fab=false;render();break;
+  case 'capture':case 'chooseFiles':logEvent('import_action',{kind:t.dataset.action});beginImport(t.dataset.action);break;
+  case 'charge':case 'advanced':state.detailsExpanded=!state.detailsExpanded;render();break;
+  case 'expandSuccess':logEvent('success_records_toggle',{value:!state.showAll});state.showAll=!state.showAll;render();break;
+  case 'budgettoggle':state.budget=!state.budget;render();break;
+  case 'saveReview':if(!state.reviewAmount)break;logEvent('review_confirm',{value:state.reviewAmount,correct:state.reviewAmount==='390',condition:state.aiCondition});state.confirmedReview=true;state.bookingReviewAmount=state.reviewAmount;navigate('uploads');break;
+  case 'dupeSame':logEvent('duplicate_decision',{decision:'same',condition:state.duplicateCondition});state.confirmedDupe=true;navigate('uploads');break;
+  case 'dupeDifferent':{
+   logEvent('duplicate_decision',{decision:'different',condition:state.duplicateCondition});
+   if(!state.confirmedDupe){state.addedExpenses.unshift({id:state.addedExpenses.length+1,merchant:'바르셀로나 카페 · 새 영수증',amount:state.duplicateCondition==='ambiguous'?'12.50':'12.00',currency:'EUR',source:'duplicate'});}
+   state.confirmedDupe=true;navigate('uploads');break;
+  }
+  case 'openSaved':state.selectedExpenseId=Number(t.dataset.savedId);navigate('expense');break;
+  case 'manualFailed':logEvent('failed_to_manual');openManual('failed');break;
+  case 'resolveExtra':{if(!state.extraAmount)break;logEvent('extra_review_confirm',{value:state.extraAmount});state.extraReviewIds=state.extraReviewIds.filter(x=>x!==state.selectedExtraId);state.selectedExtraId=null;state.extraAmount=null;navigate('uploads');break;}
+  case 'saveManual':{
+   const amount=$('#cost')?.value??state.amount;
+   const merchant=$('#merchant')?.value??state.merchant;
+   if(!Number.isFinite(Number(amount))||Number(amount)<=0||!merchant.trim()){showToast('금액과 사용처를 확인해 주세요');break;}
+   const entry={id:state.addedExpenses.length+1,amount,currency:state.currency,merchant:merchant.trim(),source:state.manualSource};logEvent('manual_saved',{source:state.manualSource});
+   state.addedExpenses.unshift(entry);state.saved=true;state.amount='';state.merchant='';
+   if(entry.source==='failed'){state.failedResolved=true;navigate('uploads');showToast('비용을 기록했어요');}
+   else{navigate('list');showToast('비용을 기록했어요');}
+   break;
+  }
+  case 'markSettled':logEvent('settlement_toggle',{value:!state.settled});state.settled=!state.settled;showToast(state.settled?'받은 것으로 표시했어요':'받음 표시를 취소했어요');break;
+  case 'retry':logEvent('retry_failed_receipt');beginImport('retry');break;
+  case 'retryOffline':if(state.offline)showToast('인터넷에 연결되면 보낼게요.');else if(state.offlineCount>0){const count=state.offlineCount;state.offlineCount=0;logEvent('offline_demo_transfer',{count});beginImport('resume');}break;
+  case 'sort':case 'more':case 'date':logEvent('placeholder_action',{target:t.dataset.action});showToast('준비 중이에요');break;
+  default:break;
+ }
+});
+document.addEventListener('change',e=>{if(e.target.name==='reviewAmount'){logEvent('review_choice_changed',{previous:state.reviewAmount,value:e.target.value,condition:state.aiCondition});state.reviewAmount=e.target.value;render();}if(e.target.name==='extraAmount'){logEvent('extra_choice_changed',{value:e.target.value});state.extraAmount=e.target.value;render();}if(e.target.id==='reviewToggle'){state.review=e.target.checked;state.confirmedReview=false;state.confirmedDupe=false;state.reviewAmount=null;newExtras(state.review?state.reviewVolume:2);render();}if(e.target.id==='offlineToggle'){state.offline=e.target.checked;if(state.offline&&state.offlineCount===0)state.offlineCount=3;render();}if(e.target.id==='emptyToggle'){state.empty=e.target.checked;render();}if(['reviewVolume','aiCondition','duplicateCondition','partyCondition','reviewPosition'].includes(e.target.id)){state[e.target.id]=e.target.id==='reviewVolume'?Number(e.target.value):e.target.value;if(e.target.id==='reviewVolume')newExtras(state.reviewVolume);if(e.target.id==='aiCondition'){state.reviewAmount=null;state.aiSuggested=state.aiCondition!=='none';}if(state.partyCondition==='solo'&&state.screen==='settlement')state.screen='home';render();}if(e.target.id==='currency'){state.currency=e.target.value;}});
+document.addEventListener('input',e=>{if(e.target.id==='cost')state.amount=e.target.value;if(e.target.id==='merchant')state.merchant=e.target.value;});
+preset('correct');
+
+/* V3.5 stand-alone unmoderated study controller */
+(function initSelfTesting(){
+  const querySelf=new URLSearchParams(location.search);
+  const adminMode=querySelf.get('facilitator')==='1'||querySelf.get('admin')==='1';
+  const tasks=[
+    {key:'verify',title:'파일 5개의 확인할 항목 2건을 정리해 주세요.',hint:'금액과 중복 내역을 확인해 주세요.',scenario:'correct',
+      complete:()=>state.confirmedReview&&state.confirmedDupe},
+    {key:'fallback',title:'글자를 읽지 못한 영수증도 기록해 주세요.',hint:'실패한 파일에서 할 수 있는 방법을 찾아보세요.',scenario:'correct',
+      complete:()=>state.failedResolved},
+    {key:'budget',title:'예산 없이 시작한 여행에 예산을 설정해 주세요.',hint:'예산을 처음 설정하는 상황이에요.',scenario:'first',
+      complete:()=>state.budget},
+    {key:'late',title:'귀국 후 빠뜨린 지출을 추가해 주세요.',hint:'카페에서 8.50유로를 썼다고 가정해 주세요.',scenario:'after',
+      complete:()=>state.addedExpenses.some(e=>e.source==='new')},
+    {key:'offline',title:'인터넷이 끊긴 상태에서 영수증을 촬영해 보세요.',hint:'현재 전송 대기 파일은 3개예요.',scenario:'offline',
+      complete:()=>state.offlineCount>=4}
+  ];
+  const intro=document.getElementById('selfIntro');
+  const bar=document.getElementById('selfTaskbar');
+  const finish=document.getElementById('selfFinish');
+  const code=document.getElementById('selfParticipant');
+  const consent=document.getElementById('selfConsent');
+  const start=document.getElementById('selfStart');
+  const next=document.getElementById('selfNext');
+  const skip=document.getElementById('selfSkip');
+  const nowText=document.getElementById('selfTaskPrompt');
+  const status=document.getElementById('selfTaskStatus');
+  const progress=document.getElementById('selfTaskProgress');
+  let running=false,taskIndex=0,taskStarted=0,results=[],assignedCondition='';
+  if(adminMode){
+    intro.hidden=true;bar.hidden=true;finish.hidden=true;
+    return;
+  }
+  document.body.classList.add('self-testing');
+  // An assigned ID is essential for 5 vs 5 comparison. Sharing one ID with multiple testers invalidates grouping.
+  const param=querySelf.get('p')||querySelf.get('participant')||'';
+  if(/^P(0[1-9]|10)$/.test(param))code.value=param;
+  function ready(){start.disabled=!(code.value&&consent.checked);}
+  code.addEventListener('change',ready);consent.addEventListener('change',ready);ready();
+  function taskSetup(){
+    const item=tasks[taskIndex];
+    const scenario=taskIndex===0?assignedCondition:item.scenario;
+    preset(scenario);
+    // Preserve log events across tasks. Preset only changes on-screen demo data.
+    logEvent('task_started',{value:item.key,condition:taskIndex===0?assignedCondition:'standard'});
+    taskStarted=Date.now();
+    progress.textContent=code.value+' · 과제 '+(taskIndex+1)+' / '+tasks.length;
+    nowText.textContent=item.title;
+    next.textContent=taskIndex===tasks.length-1?'결과 저장하기':'다음 과제';
+    next.disabled=true;
+    status.textContent=item.hint;
+    bar.hidden=false;
+  }
+  function check(){
+    if(!running||taskIndex>=tasks.length)return;
+    const completed=tasks[taskIndex].complete();
+    next.disabled=!completed;
+    status.textContent=completed?'완료했어요. 다음 과제로 넘어가세요.':tasks[taskIndex].hint;
+  }
+  function concludeTask(skipped){
+    const task=tasks[taskIndex], success=!skipped&&task.complete(), elapsed=Date.now()-taskStarted;
+    results.push({taskId:task.key,completed:success,skipped:!!skipped,durationMs:elapsed,
+      firstTaskCondition:taskIndex===0?assignedCondition:null});
+    logEvent('task_finished',{value:task.key,correct:success,elapsedMs:elapsed,condition:skipped?'skipped':'done'});
+    taskIndex++;
+    if(taskIndex===tasks.length){endSelfTest();return;}
+    taskSetup();
+  }
+  function endSelfTest(){
+    running=false;
+    bar.hidden=true;
+    logEvent('self_test_finished',{count:results.filter(t=>t.completed).length});
+    stopResearch();
+    document.getElementById('selfSummary').textContent='완료한 과제 '+results.filter(t=>t.completed).length+'개 / '+tasks.length+'개 · 참가자 '+code.value;
+    finish.hidden=false;
+    // Preserve direct phone screen but block other actions under results overlay.
+  }
+  function exportPayload(){
+    // Reuse V3.4's metadata events. Typed free-text input values were never collected by logEvent.
+    return {format:'ATA-V3.5-10-PARTICIPANTS',version:'3.5',participant:code.value,
+      condition:assignedCondition,consent:true,taskSummaries:results,events,
+      note:'Test-only mock data. No real uploaded files. Local browser metadata, exported voluntarily.'};
+  }
+  function json(){return JSON.stringify(exportPayload(),null,2)}
+  function download(){
+    const blob=new Blob([json()],{type:'application/json;charset=utf-8'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;
+    a.download='travel-ux-v3.5-'+code.value+'.json';document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),3000);
+    document.getElementById('selfSummary').textContent='결과 파일을 저장했는지 확인해 주세요. · '+code.value;
+  }
+  function showCopy(){
+    const ta=document.getElementById('selfBackup');ta.hidden=false;ta.value=json();ta.focus();ta.select();
+    document.getElementById('selfSummary').textContent='아래 내용을 모두 복사해서 전달해 주세요. · '+code.value;
+  }
+  start.addEventListener('click',()=>{
+    if(start.disabled||running)return;
+    running=true;
+    taskIndex=0;results=[];
+    assignedCondition=Number(code.value.slice(1))%2===1?'correct':'wrong';
+    // Odd P codes have correct AI preselection, even P codes have incorrect AI preselection.
+    // Both are confident preselection+badge+highlight bundles, not an isolated UI factor.
+    document.getElementById('participantCode').value=code.value;
+    intro.hidden=true;
+    preset(assignedCondition);startResearch();
+    logEvent('participant_consent',{value:true});
+    logEvent('condition_assignment',{value:assignedCondition});
+    taskSetup();
+  });
+  next.addEventListener('click',()=>{if(!next.disabled)concludeTask(false)});
+  skip.addEventListener('click',()=>{
+    // Skipping should be explicit and leave a record; no misleading automatic "task complete".
+    if(running)concludeTask(true);
+  });
+  document.addEventListener('click',e=>{if(running&&e.target.closest('#content,#navigation,#overlay,#selfTaskbar'))setTimeout(check,0)},true);
+  document.addEventListener('change',()=>{if(running)setTimeout(check,0)});
+  document.addEventListener('input',()=>{if(running)setTimeout(check,0)});
+  document.getElementById('selfDownload').addEventListener('click',download);
+  document.getElementById('selfReDownload').addEventListener('click',download);
+  document.getElementById('selfShowCopy').addEventListener('click',showCopy);
+  document.getElementById('selfDelete').addEventListener('click',()=>{
+    events=[];try{localStorage.removeItem(LOG_KEY)}catch(err){}
+    document.getElementById('selfBackup').value='';
+    document.getElementById('selfBackup').hidden=true;
+    document.getElementById('selfSummary').textContent='이 기기에 저장된 테스트 기록을 삭제했어요.';
+  });
+})();
+
+</script></body></html>
